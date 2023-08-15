@@ -3,16 +3,15 @@ import Notiflix from 'notiflix';
 const form = document.querySelector('.form');
 
 form.addEventListener('submit', onSubmitForm);
-
-function onSubmitForm(event) {
-  event.preventDefault();
-  const { delay, step, amount } = event.currentTarget.elements;
+function onSubmitForm(e) {
+  e.preventDefault();
+  const { delay, step, amount } = e.currentTarget.elements;
 
   if (delay.value < 0 || step.value < 0 || amount.value < 0) {
     Notiflix.Notify.warning(`❗ Please enter a positive number`);
   } else {
     for (let i = 0; i < amount.value; i++) {
-      let position += i;
+      let position = i + 1;
       const delays = Number(delay.value) + step.value * i;
 
       createPromise(position, delays)
@@ -28,8 +27,7 @@ function onSubmitForm(event) {
         });
     }
   }
-
-  event.currentTarget.reset();
+  e.currentTarget.reset();
 }
 
 function createPromise(position, delay) {
